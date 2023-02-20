@@ -69,7 +69,13 @@ new Vue({
   methods: {
     //Un boton con un metodo addCourse (enlazado con v-on) que permita agregar un nuevo courso usando los valores de title y time. El boton debe estar deshabilitado si title o time son vacios.
     addCourse() {
+      if (this.title === "" || this.time === 0) {
+        return;
+      }
+
       this.courses.push({ title: this.title, time: this.timeNumber });
+      this.title = "";
+      this.time = 0;
     },
     //Un boton con un metodo toggleShow (enlazado con v-on) que permita mostrar u ocultar el formulario para agregar un nuevo curso.
     toggleShow() {
