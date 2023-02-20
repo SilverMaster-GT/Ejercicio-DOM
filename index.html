@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <h1>Mis Cursos de Platzi💚</h1>
+      <v-row>
+        <v-col cols="12" sm="4" md="3">
+          <v-text-field
+            label="Titulo del curso"
+            filled
+            v-model="title"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" sm="4" md="3">
+          <v-text-field label="Horas" filled v-model="time"></v-text-field>
+        </v-col>
+        <v-col cols="12" sm="4" md="3">
+          <v-btn class="ma-2" @click="addCourse">Guardar Curso</v-btn>
+        </v-col>
+      </v-row>
+      <v-divider></v-divider>
+
+      <div>
+        <v-card max-width="600" max-height="600" elevation="3" outlined>
+          <v-card-title> Lista de Cursos </v-card-title>
+          <v-card-subtitle class="red" v-show="noCourses"
+            >Aun no has realizado cursos</v-card-subtitle
+          >
+          <v-card-text style="text-align: center">
+            <v-btn @click="sortCourses" v-show="!noCourses"
+              >Ordenar por Nombre</v-btn
+            >
+            <v-btn @click="sortCoursesByTime" v-show="!noCourses"
+              >Ordenar por tiempo</v-btn
+            >
+            <v-card-actions>
+              <v-btn color="orange lighten-2" text> Ver Cursos </v-btn>
+
+              <v-spacer></v-spacer>
+
+              <v-btn icon @click="toggleShow">
+                <v-icon
+                  >{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon
+                >
+              </v-btn>
+            </v-card-actions>
+            <v-expand-transition>
+              <div v-show="show">
+                <v-divider></v-divider>
+                <v-card-text>
+                  <v-list dense>
+                    <v-list-item-group
+                      v-model="selectedItem"
+                      color="primary"
+                      no-action
+                      sub-group
+                    >
+                      <v-list-item v-for="(curso, i) in courses" :key="i">
+                        <v-list-item-icon>
+                          <v-icon>mdi-book</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-content>
+                          <v-list-item-title
+                            >{{ curso.title }}</v-list-item-title
+                          >
+                          <v-list-item-subtitle
+                            >{{ curso.time }} horas</v-list-item-subtitle
+                          >
+                        </v-list-item-content>
+                        <v-list-item-action>
+                          <v-btn icon>
+                            <v-icon
+                              color="grey lighten-1"
+                              @click="removeCourse(i)"
+                              >mdi-bookmark-remove</v-icon
+                            >
+                          </v-btn>
+                        </v-list-item-action>
+                      </v-list-item>
+                    </v-list-item-group>
+                  </v-list>
+                </v-card-text>
+              </div>
+            </v-expand-transition>
+          </v-card-text>
+        </v-card>
+        <div>
+          <v-row>
+            <v-col>
+              <v-btn @click="clearCourses">Borrar Cursos</v-btn>
+            </v-col>
+            <v-col></v-col>
+          </v-row>
+        </div>
+        <div>
+          <hr />
+          <p>
+            Llevo <strong>{{ totalTime }}</strong> horas aprendiendo en Platzi.
+            <b>#NuncaParesDeAprender 💚</b>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
